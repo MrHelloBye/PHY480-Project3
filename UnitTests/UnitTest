@@ -1,0 +1,146 @@
+# PHY480 - Project 3
+# Solar System Model
+# Daniel Coulter, David Butts
+# Calling two_body() will show an plot of the Velocity Verlet alg and the Forward Euler alg for the earth and sun
+# Calling n_body() will show a plot of all the planets in the solar system
+# The n_body() code can easily be edited to include any planets you would like
+
+#NOTE: you must reset the system each time you call one of the functions to make sure you start the simulation from the inital point.
+from ints import Planet, forward_euler, velocity_verlet
+import matplotlib.pyplot as plt
+
+sun = Planet(1, 0, 0, 0, sun=True)
+sunx = []
+suny = []
+sunx.append(sun.xloc)
+suny.append(sun.yloc)
+mercury = Planet(1.65956463e-7, 0.387098, 0, 0.240846)
+mercuryx = []
+mercuryy = []
+mercuryx.append(mercury.xloc)
+mercuryy.append(mercury.yloc)
+venus = Planet( 	2.4478383e-6, 0.723332, 0, 0.615198)
+venusx = []
+venusy = []
+venusx.append(venus.xloc)
+venusy.append(venus.yloc)
+earth = Planet(0.000003003, 1, 0, 1)
+earthx = []
+earthy = []
+earthx.append(earth.xloc)
+earthy.append(earth.yloc)
+mars = Planet(0.3227151e-6, 1.523679, 0, 1.88082)
+marsx = []
+marsy = []
+marsx.append(mars.xloc)
+marsy.append(mars.yloc)
+jupiter = Planet(0.00095510983, 5.2044, 0, 11.862)
+jupiterx = []
+jupitery = []
+jupiterx.append(jupiter.xloc)
+jupitery.append(jupiter.yloc)
+saturn = Planet(285.8860e-6, 9.5826, 0, 29.4571)
+saturnx = []
+saturny = []
+saturnx.append(saturn.xloc)
+saturny.append(saturn.yloc)
+uranus = Planet(43.66244e-6, 19.2184, 0, 84.0205)
+uranusx = []
+uranusy = []
+uranusx.append(uranus.xloc)
+uranusy.append(uranus.yloc)
+neptune = Planet(51.51389e-6, 30.110387, 0, 164.8)
+neptunex = []
+neptuney = []
+neptunex.append(neptune.xloc)
+neptuney.append(neptune.yloc)
+pluto = Planet(0.007396e-6, 39.48, 0, 248.00)
+plutox = []
+plutoy = []
+plutox.append(pluto.xloc)
+plutoy.append(pluto.yloc)
+
+planet_list = [sun, mercury, venus, earth, mars, jupiter, saturn, uranus, neptune, pluto]
+
+h=0.01
+steps = 100
+
+def n_body():
+    """
+    Solver for the three+ body problem using the Velocity Verlet method
+    """
+    
+    for x in range(steps):
+        velocity_verlet(planet_list, h)
+        sunx.append(sun.xloc)
+        suny.append(sun.yloc)
+        mercuryx.append(mercury.xloc)
+        mercuryy.append(mercury.yloc)
+        venusx.append(venus.xloc)
+        venusy.append(venus.yloc)
+        earthx.append(earth.xloc)
+        earthy.append(earth.yloc)
+        marsx.append(mars.xloc)
+        marsy.append(mars.yloc)
+        jupiterx.append(jupiter.xloc)
+        jupitery.append(jupiter.yloc)
+        saturnx.append(saturn.xloc)
+        saturny.append(saturn.yloc)
+        uranusx.append(uranus.xloc)
+        uranusy.append(uranus.yloc)
+        neptunex.append(neptune.xloc)
+        neptuney.append(neptune.yloc)
+        plutox.append(pluto.xloc)
+        plutoy.append(pluto.yloc)
+    
+    plt.plot(sunx, suny, color = 'y')
+    plt.plot(mercuryx, mercuryy, color = '#888888')
+    plt.plot(venusx, venusy, color = '#ffb12d')
+    plt.plot(earthx, earthy, color = 'g')
+    plt.plot(marsx, marsy, color = 'r')
+    plt.plot(jupiterx, jupitery, color = 'm')
+    plt.plot(saturnx, saturny, color = '#704f17')
+    plt.plot(uranusx, uranusy, color = 'c')
+    plt.plot(neptunex, neptuney, color = 'b')
+    plt.plot(plutox, plutoy, color = 'k')
+    plt.title("Velocity Verlet")
+    plt.xlabel("X Position (AU)")
+    plt.ylabel("Y Position (AU)")
+    plt.show()
+
+
+def two_body():
+    """
+    Solver for the two body problem using both the Forward Euler and Velocity
+    Verlet methods to compare them.
+    """
+    
+    
+    for x in range(steps):
+        velocity_verlet(planet_list, h)
+        earthx.append(earth.xloc)
+        earthy.append(earth.yloc)
+        sunx.append(sun.xloc)
+        suny.append(sun.yloc)
+    
+    plt.plot(earthx,earthy)
+    plt.plot(sunx,suny)
+    plt.title("Velocity Verlet")
+    plt.xlabel("X Position (AU)")
+    plt.ylabel("Y Position (AU)")
+    plt.show()
+    
+    for x in range(steps):
+        forward_euler(earth, sun, h)
+        earthx.append(earth.xloc)
+        earthy.append(earth.yloc)
+        sunx.append(sun.xloc)
+        suny.append(sun.yloc)
+    
+    plt.plot(earthx,earthy)
+    plt.plot(sunx,suny)
+    plt.title("Forward Euler")
+    plt.xlabel("X Position (AU)")
+    plt.ylabel("Y Position (AU)")
+    plt.show()
+
