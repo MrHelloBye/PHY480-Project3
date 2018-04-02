@@ -3,7 +3,7 @@
 # Daniel Coulter, David Butts
 # Calling two_body() will show an plot of the Velocity Verlet alg and the Forward Euler alg for the earth and sun
 # Calling n_body() will show a plot of all the planets in the solar system
-# The n_body() code can easily be edited to include any planets you would like
+# The n_body() code can easily be edited to include any planets or moons you would like
 
 #NOTE: you must reset the system each time you call one of the functions to make sure you start the simulation from the inital point.
 from ints import Planet, forward_euler, velocity_verlet
